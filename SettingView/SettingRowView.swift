@@ -33,8 +33,6 @@ struct SettingRowView: View {
             
             Text(statue ?? "")
                 .foregroundStyle(.gray)
-            
-           
         }
     }
 }
