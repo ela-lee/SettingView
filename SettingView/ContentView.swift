@@ -13,29 +13,30 @@ struct Setting: Identifiable {
     let title: String
     let statue: String?
     let backgroundColor: Color
+    let destination: AnyView
 }
 
 let settings1 : [Setting] = [
-    Setting(icon: "wifi", title: "Wi-Fi", statue: "postech", backgroundColor: .blue),
-    Setting(icon: "b.square", title: "Bluetooth", statue: "켬", backgroundColor: .blue),
-    Setting(icon: "antenna.radiowaves.left.and.right", title: "셀룰러", statue: nil, backgroundColor: .green),
-    Setting(icon: "personalhotspot", title: "개인용 핫스팟", statue: nil, backgroundColor: .green),
-    Setting(icon: "battery.100percent", title: "배터리", statue: nil, backgroundColor: .green)
+    Setting(icon: "wifi", title: "Wi-Fi", statue: "postech", backgroundColor: .blue, destination: AnyView(WifiView())),
+            Setting(icon: "b.square", title: "Bluetooth", statue: "켬", backgroundColor: .blue, destination: AnyView(BluetoothView())),
+            Setting(icon: "antenna.radiowaves.left.and.right", title: "셀룰러", statue: nil, backgroundColor: .green, destination: AnyView(CellularView())),
+    Setting(icon: "personalhotspot", title: "개인용 핫스팟", statue: nil, backgroundColor: .green, destination: AnyView(PersnolHotspotView())),
+    Setting(icon: "battery.100percent", title: "배터리", statue: nil, backgroundColor: .green, destination: AnyView(BatteryView()))
 ]
 
-let settings2 : [Setting] = [
-    Setting(icon: "gear", title: "일반", statue: "", backgroundColor: .gray),
-    Setting(icon: "accessibility", title: "손쉬운 사용", statue: "", backgroundColor: .blue),
-    Setting(icon: "magnifyingglass", title: "검색", statue: "", backgroundColor: .gray),
-    Setting(icon:"iphone.and.arrow.left.and.arrow.right.inward", title: "동작버튼", statue: "", backgroundColor: .blue),
-    Setting(icon: "sun.max.fill", title: "디스플레이 및 밝기", statue: nil, backgroundColor: .blue),
-    Setting(icon: "atom", title: "배경화면", statue: "", backgroundColor: .cyan),
-    Setting(icon: "app.badge.clock", title: "스텐바이", statue: nil, backgroundColor: .black),
-    Setting(icon: "rectangle.3.group", title: "제어센터", statue: nil, backgroundColor: .gray),
-    Setting(icon: "camera.fill", title: "카메라", statue: nil, backgroundColor: .gray),
-    Setting(icon: "apps.iphone", title: "홈 화면 및 앱 보관함", statue: nil, backgroundColor: .blue),
-    Setting(icon: "apple.intelligence", title: "Apple Intelligence 및 Siri", statue: nil, backgroundColor: .orange)
-]
+//let settings2 : [Setting] = [
+//    Setting(icon: "gear", title: "일반", statue: "", backgroundColor: .gray),
+//    Setting(icon: "accessibility", title: "손쉬운 사용", statue: "", backgroundColor: .blue),
+//    Setting(icon: "magnifyingglass", title: "검색", statue: "", backgroundColor: .gray),
+//    Setting(icon:"iphone.and.arrow.left.and.arrow.right.inward", title: "동작버튼", statue: "", backgroundColor: .blue),
+//    Setting(icon: "sun.max.fill", title: "디스플레이 및 밝기", statue: nil, backgroundColor: .blue),
+//    Setting(icon: "atom", title: "배경화면", statue: "", backgroundColor: .cyan),
+//    Setting(icon: "app.badge.clock", title: "스텐바이", statue: nil, backgroundColor: .black),
+//    Setting(icon: "rectangle.3.group", title: "제어센터", statue: nil, backgroundColor: .gray),
+//    Setting(icon: "camera.fill", title: "카메라", statue: nil, backgroundColor: .gray),
+//    Setting(icon: "apps.iphone", title: "홈 화면 및 앱 보관함", statue: nil, backgroundColor: .blue),
+//    Setting(icon: "apple.intelligence", title: "Apple Intelligence 및 Siri", statue: nil, backgroundColor: .orange)
+//]
 
 
 struct ContentView: View {
@@ -104,7 +105,7 @@ struct ContentView: View {
                     
                     NavigationLink(destination: AccountSuggestionsView()) {
                         HStack {
-                            Text("Apple 계정 제안")
+                            Text("구입에 포함된 서비스")
                             
                             
                             
@@ -113,15 +114,9 @@ struct ContentView: View {
                     
                 }
                 
-                //section 2
-                Section {
-                    HStack {
-                        Text("구입에 포함된 서비스")
-                      
-                    }
-                }
+               
                 
-                //section 3
+                //section 2
                 Section {
                     HStack {
                         Image(systemName: "airplane")
@@ -140,14 +135,15 @@ struct ContentView: View {
                         Toggle("", isOn: $airplainIsOn)
                     }
                     
-                    ForEach(settings1) { setting1 in SettingRowView(icon: setting1.icon, title: setting1.title, statue: setting1.statue, backgroundColor: setting1.backgroundColor)
+                    ForEach(settings1) {setting1 in NavigationLink(destination: setting1.destination) {
+                        SettingRowView(icon: setting1.icon, title: setting1.title, statue: setting1.statue, backgroundColor: setting1.backgroundColor)
                     }
                 }
                 
-                // section4
-                Section {
-                    
-                    ForEach(settings2) {setting2 in SettingRowView(icon: setting2.icon, title: setting2.title, statue: setting2.statue , backgroundColor: setting2.backgroundColor)}
+                // section3
+//                Section {
+//                    
+//                    ForEach(settings2) {setting2 in SettingRowView(icon: setting2.icon, title: setting2.title, statue: setting2.statue , backgroundColor: setting2.backgroundColor)}
                 }
                 
             }

@@ -10,7 +10,7 @@ import SwiftUI
 struct ICloudView: View {
     var body: some View {
         
-       Text("Hello, World!")
+       Text("icolud")
         
     }
     
